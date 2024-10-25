@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: job-web-api
+    env: node
+    plan: free
+    buildCommand: 'npm install && npm run build'
+    startCommand: 'npm run start:prod'
+    envVars:
+      - key: DATABASE_URL
+        value: "mongodb+srv://ajahsuleiman:xTBjC14fUpaBzhmU@jobboard.ucy4m.mongodb.net/jobboard?retryWrites=true&w=majority&appName=JobBoard"
+      - key: JWT_SECRET
+        value: "mykey"
+    healthCheckPath: /health
