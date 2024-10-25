@@ -16,6 +16,7 @@ export class AuthService {
     }
     return null;
   }
+
   async validateAdmin(email: string, password: string): Promise<any> {
     const user = await this.validateUser(email, password);
     if (user && user.role === Role.ADMIN) {
@@ -32,10 +33,22 @@ export class AuthService {
   }
 
   async register(data: any) {
-    const hashedPassword = bcrypt.hashSync(data.password, 10); // Hash password before saving
+    // Check if the email is already in use
+    const existingUser = await this.prisma.user.findUnique({
+      where: { email: data.email },
+    });
+
+    if (existingUser) {
+      throw new Error('Email is already in use'); // Throw an error if the email is taken
+    }
+
+    // Hash password before saving
+    const hashedPassword = bcrypt.hashSync(data.password, 10);
+
+    // Create the user with hashed password
     return this.prisma.user.create({
       data: { ...data, password: hashedPassword, role: 'USER' },
     });
   }
-
 }
+

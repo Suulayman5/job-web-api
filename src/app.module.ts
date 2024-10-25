@@ -8,8 +8,8 @@ import { JobModule } from './job/job.module';
 @Module({
   imports: [AuthModule, JobModule],
   controllers: [AppController],
-  providers: [PrismaService,AppService],
+  providers: [PrismaService, AppService],
   exports: [PrismaService],
- 
 })
 export class AppModule {}
+
