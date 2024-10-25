@@ -14,7 +14,7 @@ export class AdminService {
     // Fetch job applications with applicant details
     return this.prisma.application.findMany({
       where: { jobId },
-      include: { user: true }, // include user details like resume and contact
+      include: { user: true },
     });
   }
 

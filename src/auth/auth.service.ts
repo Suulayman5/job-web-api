@@ -39,13 +39,12 @@ export class AuthService {
     });
 
     if (existingUser) {
-      throw new Error('Email is already in use'); // Throw an error if the email is taken
+      throw new Error('Email is already in use');
     }
 
     // Hash password before saving
     const hashedPassword = bcrypt.hashSync(data.password, 10);
 
-    // Create the user with hashed password
     return this.prisma.user.create({
       data: { ...data, password: hashedPassword, role: 'USER' },
     });

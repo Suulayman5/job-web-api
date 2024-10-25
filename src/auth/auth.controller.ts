@@ -3,37 +3,37 @@ import { AuthService } from './auth.service';
 import { ApiTags, ApiOperation, ApiBody, ApiBearerAuth } from '@nestjs/swagger';
 import { LocalAuthGuard } from './admin-auth.guard';
 
-@ApiTags('auth') // Group the routes under 'auth' in Swagger
+@ApiTags('auth') 
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) {}
 
-  @ApiOperation({ summary: 'User login' }) // Add description for login endpoint
-  @ApiBody({ schema: { example: { email: 'user@example.com', password: 'password123' } } }) // Define request body example
+  @ApiOperation({ summary: 'User login' }) 
+  @ApiBody({ schema: { example: { email: 'user@example.com', password: 'password123' } } })
   @Post('login')
   async login(@Body() body) {
     const user = await this.authService.validateUser(body.email, body.password);
     if (!user) {
-      return { message: 'Invalid credentials' }; // Return error if credentials are wrong
+      return { message: 'Invalid credentials' };
     }
-    return this.authService.login(user); // If valid, return JWT token
+    return this.authService.login(user); 
   }
 
-  @ApiOperation({ summary: 'User registration' }) // Add description for register endpoint
-  @ApiBody({ schema: { example: { email: 'user@example.com', password: 'password123', name: 'John Doe' } } }) // Define request body example
+  @ApiOperation({ summary: 'User registration' })
+  @ApiBody({ schema: { example: { email: 'user@example.com', password: 'password123', name: 'John Doe' } } })
   @Post('register')
 async register(@Body() body) {
   try {
-    return await this.authService.register(body); // Try registering the user
+    return await this.authService.register(body); 
   } catch (error) {
-    return { message: error.message }; // Catch and return the error message if email is taken
+    return { message: error.message }; 
   }
 }
 
 
-  @ApiOperation({ summary: 'Admin login' }) // Add description for admin login endpoint
-  @ApiBearerAuth() // Add bearer auth (JWT) to this route
-  @UseGuards(LocalAuthGuard) // Use LocalAuthGuard for validating credentials
+  @ApiOperation({ summary: 'Admin login' })
+  @ApiBearerAuth()
+  @UseGuards(LocalAuthGuard)
   @Post('admin/login')
   async adminLogin(@Req() req: any) {
     return this.authService.login(req.user); // Call login method to get token
