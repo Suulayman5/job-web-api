@@ -1,13 +1,13 @@
 import { Controller, Get, Post, Put, Delete, Body, Param } from '@nestjs/common';
 import { JobService } from './job.service';
-import { Job } from '@prisma/client';
+import { JobListing } from '@prisma/client';
 
 @Controller('jobs')
 export class JobController {
   constructor(private readonly jobService: JobService) {}
 
   @Post()
-  createJob(@Body() jobData: Job) {
+  createJob(@Body() jobData: JobListing) {
     return this.jobService.createJob(jobData);
   }
 
@@ -22,12 +22,22 @@ export class JobController {
   }
 
   @Put(':id')
-  updateJob(@Param('id') id: string, @Body() jobData: Partial<Job>) {
+  updateJob(@Param('id') id: string, @Body() jobData: Partial<JobListing>) {
     return this.jobService.updateJob(id, jobData);
   }
 
   @Delete(':id')
   deleteJob(@Param('id') id: string) {
     return this.jobService.deleteJob(id);
+  }
+
+
+  @Post(':id/apply')
+  async applyForJob(
+    @Param('id') jobId: string,
+    @Body('userId') userId: string,
+    @Body('resume') resume: string,
+  ) {
+    return this.jobService.applyForJob(jobId, userId, resume);
   }
 }
