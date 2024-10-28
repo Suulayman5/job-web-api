@@ -3,7 +3,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from './jwt.strategy';
 import { AuthService } from './auth.service';
-import { PrismaService } from 'prisma/service';  // Correct PrismaService import
+import { PrismaService } from '../prisma/service';  // Correct PrismaService import
 import { AuthController } from './auth.controller';
 
 @Module({

@@ -10,10 +10,13 @@
     "sourceMap": true,
     "outDir": "./dist",
     "baseUrl": "./",
+    "paths": {
+      "prisma/*": ["src/prisma/*"]
+    },
     "incremental": true,
     "skipLibCheck": true,
-    "strict": true, // enables all strict type-checking options
-    "strictNullChecks": true, // recommended for stricter typing
+    "strict": true,
+    "strictNullChecks": true,
     "strictBindCallApply": true,
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true
@@ -21,3 +24,4 @@
   "exclude": ["node_modules", "dist", "test", "**/*.spec.ts"],
   "include": ["src/**/*.ts"]
 }
+
